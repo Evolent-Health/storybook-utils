@@ -2,9 +2,10 @@
   "devDependencies": {
     "lerna": "^2.8.0"
   },
-  "name": "wix-ui",
+  "name": "storybook-utils",
   "version": "1.0.0",
   "description": "wix-ui-monorepo",
+  "main": "./packages/wix-storybook-utils/src/loader/index.js",
   "scripts": {
     "test": "lerna run test --parallel false --concurrency 1",
     "bootstrap": "lerna bootstrap",
