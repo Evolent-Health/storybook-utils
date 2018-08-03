@@ -9,7 +9,7 @@
     "docs",
     "*.js"
   ],
-  "main": "./packages/wix-storybook-utils/src/loader/index.js",
+  "main": "./src/loader/index.js",
   "scripts": {
     "build": "yoshi build",
     "postbuild": "node ./build-tools/import-path --path src",
