@@ -56,8 +56,5 @@ module.exports = {
   },
   reset: () => {
     return browser.executeScript('window.autoexample.resetState()');
-  },
-  remount: () => {
-    return browser.executeScript('window.story.remount()');
   }
 };

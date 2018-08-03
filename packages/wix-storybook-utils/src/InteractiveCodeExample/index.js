@@ -1,6 +1,7 @@
 import React, {cloneElement, Component, Children} from 'react';
 import PropTypes from 'prop-types';
 
+/*
 import CodeExample from '../CodeExample';
 
 export default class InteractiveCodeExample extends Component {
@@ -42,10 +43,12 @@ export default class InteractiveCodeExample extends Component {
         code={this.state.code}
         codeType="django"
         autoExpand={this.props.autoExpand}
-      >
+        >
         {childrenWithOnChange}
       </CodeExample>
     );
   }
 
 }
+
+*/

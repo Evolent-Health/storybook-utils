@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CloseIcon from 'wix-ui-icons-common/system/Close';
-import InputWithOptions from 'wix-style-react/InputWithOptions';
-import {default as WixRadioGroup} from 'wix-style-react/RadioGroup';
-import Button from 'wix-style-react/Button';
+import { Icon, Dropdown, Form, Radio, Button } from "semantic-ui-react";
+
+//import CloseIcon from 'wix-ui-icons-common/system/Close';
+//import InputWithOptions from 'wix-style-react/InputWithOptions';
+//import {default as WixRadioGroup} from 'wix-style-react/RadioGroup';
+//import Button from 'wix-style-react/Button';
 
 import NO_VALUE_TYPE from '../../AutoExample/no-value-type';
 
 const isUndefined = a => typeof a === 'undefined';
-const isFunction = a => typeof a === 'function';
 
 export default class List extends React.Component {
   static propTypes = {
@@ -17,22 +18,17 @@ export default class List extends React.Component {
     defaultValue: PropTypes.any,
     values: PropTypes.arrayOf(PropTypes.any),
     onChange: PropTypes.func,
-    isRequired: PropTypes.bool
+    required: PropTypes.bool
   };
 
   constructor(props) {
     super(props);
 
-    const options = this.createOptions(props.values || []);
-    const currentValue = options.find(option => option.realValue === props.value) || {};
-
     this.state = {
-      currentValue,
-      currentFilter: isFunction(props.defaultValue) ?
-        currentValue.value :
-        props.defaultValue || '',
+      currentValue: {},
+      currentFilter: props.defaultValue || '',
       isFiltering: false,
-      options
+      options: this.createOptions(props.values || [])
     };
   }
 
@@ -72,22 +68,19 @@ export default class List extends React.Component {
     <span
       onClick={this.clearValue}
       style={{color: '#3899ec', cursor: 'pointer'}}
-      children={<CloseIcon size="7px"/>}
-    />;
+      children={<Icon name='close' size='large' />}
+      />;
 
   clearButton =
     <div style={{padding: '1em 0'}}>
-      <Button
-        height="x-small"
-        theme="transparent"
-        children="Clear"
-        onClick={this.clearValue}
-      />
+      <Button icon onClick={this.clearValue} >
+        <Icon name="clear" />
+      </Button>
     </div>;
 
   getSelectedId = () => {
     const selectedOption = this.state.options.find(option => option.id === this.state.currentValue.id) || {};
-    return selectedOption.id;
+    return selectedOption.id || 0;
   }
 
   onOptionChange = ({id}) => {
@@ -108,35 +101,34 @@ export default class List extends React.Component {
 
   dropdown() {
     return (
-      <InputWithOptions
+      <Dropdown
         value={this.state.currentFilter}
         options={this.getFilteredOptions()}
         selectedId={this.getSelectedId()}
         onSelect={this.onOptionChange}
         onChange={this.onFilterChange}
         placeholder={this.props.defaultValue || ''}
-        {...(this.state.currentFilter && !this.props.isRequired ? {suffix: this.clearIcon} : {})}
-      />
+        {...(this.state.currentFilter && !this.props.required ? {suffix: this.clearIcon} : {})}
+        />
     );
   }
 
   radios() {
     return (
       <div>
-        <WixRadioGroup
-          value={this.state.currentValue.id}
-          onChange={id => this.onOptionChange({id})}
-        >
-          {this.state.options.map(({id, value}) =>
-            <WixRadioGroup.Radio
-              key={id}
-              value={id}
-              children={value}
+        <Form>
+        {this.state.options.map(({id, value}) =>
+          <Form.Field>
+            <Radio
+              label={id}
+              name='radioGroup'
+              value={value}
+              //checked={}
             />
-          )}
-        </WixRadioGroup>
-
-        { !this.props.isRequired && this.state.currentValue.value && this.clearButton }
+          </Form.Field>
+        )}
+      </Form>
+        { !this.props.required && this.state.currentValue.value && this.clearButton }
       </div>
     );
   }

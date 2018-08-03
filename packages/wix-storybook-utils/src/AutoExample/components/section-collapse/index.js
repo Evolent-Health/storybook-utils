@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Collapse from 'react-collapse';
-import Heading from 'wix-style-react/Heading';
 
-import styles from './styles.scss';
+import { Header, Grid } from "semantic-ui-react";
 
 export default class PropsCollapse extends React.Component {
   static propTypes = {
-    title: PropTypes.string.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    children: PropTypes.node.isRequired
+    title: PropTypes.string,
+    isOpen: PropTypes.bool,
+    children: PropTypes.node
   }
 
   static defaultProps = {
@@ -33,15 +32,12 @@ export default class PropsCollapse extends React.Component {
   render() {
     return (
       <div>
-        <div
-          onClick={this.toggleCollapse}
-          className={styles.head}
-        >
-          <Heading appearance="H2">
+        <div onClick={this.toggleCollapse} >
+          <Header as="h2">
             {this.props.title}
-          </Heading>
+          </Header>
 
-          <div className={styles.headSub}>
+          <div>
             { this.state.isOpen ? 'Hide' : 'Expand' }
           </div>
         </div>

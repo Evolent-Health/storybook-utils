@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import Markdown from '../Markdown';
 import parser from './parser';
+
+import { Table } from 'semantic-ui-react';
 
 const shouldHideForE2E = global.self === global.top;
 
@@ -93,7 +94,7 @@ const AutoDocs = ({source = '', parsedSource, showTitle}) => {
       .join('\n');
 
   return !shouldHideForE2E && (
-    <div className="markdown-body">
+    <div>
       { showTitle && displayName &&
         <div>
           <h1>
@@ -108,23 +109,23 @@ const AutoDocs = ({source = '', parsedSource, showTitle}) => {
 
       <h2>Available <code>props</code></h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Default Value</th>
-            <th>Required</th>
-            <th>Description</th>
-          </tr>
-        </thead>
+      <Table celled striped>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Type</Table.HeaderCell>
+            <Table.HeaderCell>Default Value</Table.HeaderCell>
+            <Table.HeaderCell>Required</Table.HeaderCell>
+            <Table.HeaderCell>Description</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
 
-        <tbody>
+        <Table.Body>
           { prepareParsedProps(props).map(propRow) }
 
           { !parsedSource && composes.length > 0 &&
-            <tr>
-              <td colSpan={5}>
+            <Table.Row>
+              <Table.Cell colSpan={5}>
                 Also includes props from:
 
                 <ul>
@@ -134,11 +135,11 @@ const AutoDocs = ({source = '', parsedSource, showTitle}) => {
                     </li>
                   )}
                 </ul>
-              </td>
-            </tr>
+              </Table.Cell>
+            </Table.Row>
           }
-        </tbody>
-      </table>
+        </Table.Body>
+      </Table>
 
       { methods.filter(({name}) => !name.startsWith('_')).length > 0 && <h2>Available <code>methods</code></h2> }
       { methods.length > 0 && <Markdown source={methodsToMarkdown(methods)}/> }
@@ -157,4 +158,3 @@ AutoDocs.defaultProps = {
 };
 
 export default AutoDocs;
-

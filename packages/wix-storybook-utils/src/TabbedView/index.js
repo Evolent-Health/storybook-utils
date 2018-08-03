@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+/*
 import Tabs from 'wix-style-react/Tabs';
 
 const createTab = id => ({title: id, id});
@@ -34,7 +35,7 @@ export default class TabbedView extends Component {
             activeId={this.state.activeTabId}
             onClick={this.onTabClick}
             items={this.props.tabs.map(createTab)}
-          />
+            />
         }
 
         {React.Children.map(
@@ -45,3 +46,5 @@ export default class TabbedView extends Component {
     );
   }
 }
+
+*/

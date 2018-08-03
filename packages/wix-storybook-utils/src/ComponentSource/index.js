@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import CodeBlock from '../CodeBlock';
 import removeHOC from './remove-hoc';
@@ -20,17 +21,17 @@ const componentToJSX = component =>
     }
   );
 
-/**
-  * given react component, render a source example
-  */
+
+  // given react component, render a source example
+  
 const ComponentSource = ({component}) =>
   <CodeBlock
-    dataHook="metadata-codeblock"
     source={componentToJSX(component)}
-  />;
+    />;
 
 ComponentSource.propTypes = {
-  component: PropTypes.node.isRequired
+  component: PropTypes.node
 };
 
 export default ComponentSource;
+

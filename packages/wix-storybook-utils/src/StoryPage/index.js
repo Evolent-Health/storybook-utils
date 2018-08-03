@@ -1,24 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TextLink from 'wix-style-react/TextLink';
+import { Grid, Tab, Divider } from 'semantic-ui-react';
 
-import TabbedView from '../TabbedView';
 import Markdown from '../Markdown';
+import AutoDocs from '../AutoDocs';
 import CodeBlock from '../CodeBlock';
 import AutoExample from '../AutoExample';
-import AutoDocs from '../AutoDocs';
+
+// import TextLink from 'wix-style-react/TextLink';
+/*
+import TabbedView from '../TabbedView';
+
+*/
+
+import 'semantic-ui-css/semantic.min.css';
+
 import omit from '../AutoExample/utils/omit';
-
-import styles from './styles.scss';
-
-const tabs = metadata =>
-  [
-    'Usage',
-    'API',
-    ...(metadata.readmeTestkit ? ['Testkit'] : []),
-    ...(metadata.readmeAccessibility ? ['Accessibility'] : [])
-  ];
 
 const importString = ({metadata, config, exampleImport}) =>
   [
@@ -30,30 +28,17 @@ const importString = ({metadata, config, exampleImport}) =>
       when: () => config.importFormat,
       make: () =>
         config.importFormat
-          .replace(/%componentName/g, metadata.displayName)
+          .replace(/%componentName/g, "")
           .replace(
             new RegExp('%(' + Object.keys(config).join('|') + ')', 'g'),
             (match, configKey) => config[configKey] || ''
           )
     },
-    { // default
+    { // default  `import ${metadata.displayName} from '${config.moduleName}/${metadata.displayName}';`
       when: () => true,
-      make: () => `import ${metadata.displayName} from '${config.moduleName}/${metadata.displayName}';`
+      make: () => `import {${metadata.displayName}} from '${config.moduleName}';`
     }
   ].find(({when}) => when()).make();
-
-const Section = ({title, children}) => (
-  <div>
-    <Markdown
-      source={`## ${title}`}
-    />
-    {children}
-  </div>
-);
-Section.propTypes = {
-  title: PropTypes.string,
-  children: PropTypes.any
-};
 
 const StoryPage = ({
   metadata,
@@ -74,24 +59,114 @@ const StoryPage = ({
     props: omit(metadata.props)(prop => hiddenProps.includes(prop))
   };
 
-  return (
-    <TabbedView tabs={tabs(metadata)}>
-      <div className={styles.usage}>
-        <Markdown
-          dataHook="metadata-readme"
-          source={metadata.readme || `# \`<${visibleDisplayName}/>\``}
+  console.log("metadata");
+  console.log(metadata);
+  console.log("config");
+  console.log(config);
+  console.log("component");
+  console.log(component);
+  console.log("componentProps");
+  console.log(componentProps);
+  console.log("hiddenProps");
+  console.log(hiddenProps);
+  console.log("displayName");
+  console.log(displayName);
+  console.log("exampleProps");
+  console.log(exampleProps);
+  console.log("exampleImport");
+  console.log(exampleImport);
+  console.log("examples");
+  console.log(examples);
+  console.log("codeExample");
+  console.log(codeExample);
+
+  let renderedComponent = React.createElement(component, componentProps);
+
+  let componentURL;
+
+  for (let i = 0; i < config.componentPaths.length; i++) {
+    if (config.componentPaths[i][0] === visibleDisplayName) {
+      componentURL = config.componentPaths[i][1];
+    }
+  }
+
+  
+
+  let usageTab = (
+    <div>
+      <Grid columns='equal'>
+        <Grid.Column>
+          <div>
+            <Markdown
+              source={`# \`<${visibleDisplayName}/>\``}
+            />
+          </div>
+        </Grid.Column>
+        <Grid.Column>
+          { (displayName || metadata.displayName) &&
+            <div style={{ textAlign: "right", marginTop: "8px" }}>
+              <a
+                style={{ fontSize: "20px", color: "rgb(56, 153, 236)" }}
+                href={`${config.repoBaseURL}${componentURL}`}
+                target="_blank"
+                >
+                View source
+              </a>
+            </div>
+          }
+        </Grid.Column>
+      </Grid>
+      <Divider />
+
+      {metadata.readme ?
+        <div>
+          <Markdown
+            source={metadata.readme}
+          />
+          <Divider />
+        </div>
+        :
+        null
+      }
+
+      <CodeBlock
+        style={{ marginTop: "10px" }}
+        source={importString({
+          config,
+          metadata: visibleMetadata,
+          exampleImport
+        })}
+      />
+      <Divider />
+      
+      <AutoExample
+        component={component}
+        parsedSource={visibleMetadata}
+        componentProps={componentProps}
+        exampleProps={exampleProps}
+        codeExample={codeExample}
         />
 
-        { (displayName || metadata.displayName) &&
-          <div className={styles.githubLink}>
-            <TextLink
-              link={`${config.repoBaseURL}${visibleDisplayName}`}
-              target="blank"
-            >
-              View source
-            </TextLink>
-          </div>
-        }
+      {/*renderedComponent*/}
+
+    </div>
+  );
+
+  const panes = [
+    { menuItem: 'Usage', render: () => <Tab.Pane attached={false}>{usageTab}</Tab.Pane> },
+    { menuItem: 'API', render: () => <Tab.Pane attached={false}><AutoDocs parsedSource={visibleMetadata}/></Tab.Pane> },
+    (metadata.readmeTestkit ? { menuItem: 'Testkit', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> } : null),
+    (metadata.readmeAccessibility ? { menuItem: 'Accessibility', render: () => <Tab.Pane attached={false}>Tab 4 Content</Tab.Pane> } : null),
+  ];
+
+  return (
+      <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+
+
+    /*
+    <TabbedView tabs={tabs(metadata)}>
+      <div className={styles.usage}>
+        
 
         <CodeBlock
           dataHook="metadata-import"
@@ -100,7 +175,7 @@ const StoryPage = ({
             metadata: visibleMetadata,
             exampleImport
           })}
-        />
+          />
 
         <Section title="Playground">
           <AutoExample
@@ -109,14 +184,14 @@ const StoryPage = ({
             componentProps={componentProps}
             exampleProps={exampleProps}
             codeExample={codeExample}
-          />
+            />
         </Section>
 
         { examples &&
           <Section title="Examples">
             {examples}
           </Section>
-        }
+         }
       </div>
 
       <AutoDocs parsedSource={visibleMetadata}/>
@@ -125,6 +200,7 @@ const StoryPage = ({
 
       { metadata.readmeAccessibility && <Markdown source={metadata.readmeAccessibility}/> }
     </TabbedView>
+    */
   );
 };
 

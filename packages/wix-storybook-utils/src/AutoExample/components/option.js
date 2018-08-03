@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Row, Col} from 'wix-style-react/Grid';
+
+//import {Row, Col} from 'wix-style-react/Grid';
+import { Grid } from "semantic-ui-react";
 
 import Markdown from '../../Markdown';
-import styles from './styles.scss';
+//import styles from './styles.scss';
+let styles={}
 
 const Option = ({
   label,
@@ -11,29 +14,29 @@ const Option = ({
   children,
   onChange,
   defaultValue,
-  isRequired,
+  required,
   dataHook
 }) =>
   children ? (
-    <Row
+    <Grid.Row
       dataHook={dataHook}
       className={styles.option}
-    >
-      <Col span={6}>
-        <Markdown source={`\`${label}${isRequired ? '*' : ''}\``}/>
-      </Col>
+      >
+      <Grid.Column width={8}>
+        <Markdown source={`\`${label}${required ? '*' : ''}\``}/>
+      </Grid.Column>
 
-      <Col span={6}>
+      <Grid.Column width={8}>
         {React.cloneElement(children, {
           value: children.type === 'div' ? value.toString() : value,
           defaultValue,
           onChange,
 
           // this is a hack to prevent warning im sorry, hopefully temporary,TODO
-          ...(children.type === 'div' ? {} : {isRequired})
+          ...(children.type === 'div' ? {} : {required})
         })}
-      </Col>
-    </Row>
+      </Grid.Column>
+    </Grid.Row>
   ) : null;
 
 Option.propTypes = {
@@ -42,7 +45,7 @@ Option.propTypes = {
   defaultValue: PropTypes.any,
   children: PropTypes.node,
   onChange: PropTypes.func,
-  isRequired: PropTypes.bool,
+  required: PropTypes.bool,
   dataHook: PropTypes.string
 };
 
