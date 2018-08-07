@@ -18,35 +18,22 @@ import Option from './option';
 // import styles from './styles.scss';
 let styles = {};
 
-const Preview = ({children, onToggleRtl, isDarkBackground, onToggleBackground}) =>
+const Preview = ({children}) =>
     <div> 
       <div>
         <Header as="h2">Preview</Header>
-
-        <div className={styles.previewControls}>
-            <Checkbox
-              toggle
-              checked={isDarkBackground}
-              label="Dark Background"
-              onChange={(e, { checked }) => {
-                onToggleBackground(checked);
-              }}
-            />
-        </div>
-        
       </div>
 
-        <div 
-          style={{ 
-            padding: "60px 20px",
-            border: "1px solid #dee6ed",
-            boxShadow: "0 0 10px 2px #e5ebf1 inset",
-            backgroundColor: (isDarkBackground ? "#5d5d5d" : "#f9f9f9" ),
-            //backgroundImage: "linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%, #eee 100%),linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%)",
-            marginTop: "8px",
-            borderRadius: "3px"
-          }} 
-        >
+      <div 
+        style={{ 
+          padding: "60px 20px",
+          border: "1px solid #dee6ed",
+          boxShadow: "0 0 10px 2px #e5ebf1 inset",
+          backgroundColor: "#f6f8fa",
+          marginTop: "8px",
+          borderRadius: "3px"
+        }} 
+      >
         {children}
       </div>
     </div>;
@@ -54,10 +41,6 @@ const Preview = ({children, onToggleRtl, isDarkBackground, onToggleBackground}) 
 
 Preview.propTypes = {
   children: PropTypes.node,
-  isRtl: PropTypes.bool,
-  isDarkBackground: PropTypes.bool,
-  onToggleRtl: PropTypes.func,
-  onToggleBackground: PropTypes.func
 };
 
 
@@ -96,20 +79,21 @@ const CustomInput = ({value, onChange, defaultValue, ...props}) =>
   <Form>
     <TextArea
       autoHeight
-      style={{ maxHeight: "250px" }}
+      style={{ maxHeight: "180px" }}
       value={handleValue(value)}
-      onChange={({target: {value}}) => onChange(value)}
+      onChange={null}
       placeholder={defaultValue}
       {...props}
       />
-    </Form>
+  </Form>
   :
   <Input
+    fluid
     value={handleValue(value)}
     onChange={({target: {value}}) => onChange(value)}
     placeholder={defaultValue}
     {...props}
-    />
+  />
 );
 
 Input.propTypes = {

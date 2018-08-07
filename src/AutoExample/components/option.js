@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 //import {Row, Col} from 'wix-style-react/Grid';
-import { Grid } from "semantic-ui-react";
+import {Grid} from 'semantic-ui-react';
 
 import Markdown from '../../Markdown';
 //import styles from './styles.scss';
-let styles={}
+const styles = {};
 
 const Option = ({
   label,
@@ -18,15 +18,16 @@ const Option = ({
   dataHook
 }) =>
   children ? (
-    <Grid.Row
+    <Grid
+      columns="equal"
       dataHook={dataHook}
       className={styles.option}
       >
-      <Grid.Column width={8}>
+      <Grid.Column width={6}>
         <Markdown source={`\`${label}${required ? '*' : ''}\``}/>
       </Grid.Column>
 
-      <Grid.Column width={8}>
+      <Grid.Column>
         {React.cloneElement(children, {
           value: children.type === 'div' ? value.toString() : value,
           defaultValue,
@@ -36,7 +37,7 @@ const Option = ({
           ...(children.type === 'div' ? {} : {required})
         })}
       </Grid.Column>
-    </Grid.Row>
+    </Grid>
   ) : null;
 
 Option.propTypes = {

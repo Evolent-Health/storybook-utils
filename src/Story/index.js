@@ -17,6 +17,7 @@ export default ({
   exampleImport,
   codeExample,
   hiddenProps,
+  readOnlyProps,
   _config,
   _metadata
 }) =>
@@ -48,6 +49,7 @@ export default ({
               examples,
               codeExample,
               hiddenProps,
+              readOnlyProps,
               metadata: _metadata,
               config: _config
             }}

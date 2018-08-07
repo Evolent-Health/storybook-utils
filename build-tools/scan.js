@@ -18,7 +18,7 @@ module.exports = function (pathName, dts) {
         const componentPath = path.relative('./', absolutePath);
 
         const files = [
-          {path: `./${name}.js`, source: `module.exports = require('./${componentPath.replace(/\\/g, "/")}');\n`},
+          {path: `./${name}.js`, source: `module.exports = require('./${componentPath.replace(/\\/g, '/')}');\n`}
         ];
 
         if (dts) {
@@ -26,8 +26,6 @@ module.exports = function (pathName, dts) {
           files.push(declarationFile);
         }
 
-        console.log("files: " + JSON.stringify(files));
-        
         return files;
       })
 

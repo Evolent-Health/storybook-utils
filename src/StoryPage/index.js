@@ -1,22 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Grid, Tab, Divider } from 'semantic-ui-react';
-
 import Markdown from '../Markdown';
 import AutoDocs from '../AutoDocs';
 import CodeBlock from '../CodeBlock';
 import AutoExample from '../AutoExample';
-
-// import TextLink from 'wix-style-react/TextLink';
-/*
-import TabbedView from '../TabbedView';
-
-*/
-
-import 'semantic-ui-css/semantic.min.css';
-
 import omit from '../AutoExample/utils/omit';
+import 'semantic-ui-less/semantic.less';
 
 const importString = ({metadata, config, exampleImport}) =>
   [
@@ -34,9 +24,9 @@ const importString = ({metadata, config, exampleImport}) =>
             (match, configKey) => config[configKey] || ''
           )
     },
-    { // default  `import ${metadata.displayName} from '${config.moduleName}/${metadata.displayName}';`
+    {
       when: () => true,
-      make: () => `import {${metadata.displayName}} from '${config.moduleName}';`
+      make: () => `import { ${metadata.displayName} } from '${config.moduleName}';`
     }
   ].find(({when}) => when()).make();
 
@@ -46,6 +36,7 @@ const StoryPage = ({
   component,
   componentProps,
   hiddenProps,
+  readOnlyProps,
   displayName,
   exampleProps,
   exampleImport,
@@ -53,32 +44,14 @@ const StoryPage = ({
   codeExample
 }) => {
   const visibleDisplayName = displayName || metadata.displayName;
+  
   const visibleMetadata = {
     ...metadata,
+    hiddenProps,
+    readOnlyProps,
     displayName: visibleDisplayName,
     props: omit(metadata.props)(prop => hiddenProps.includes(prop))
   };
-
-  console.log("metadata");
-  console.log(metadata);
-  console.log("config");
-  console.log(config);
-  console.log("component");
-  console.log(component);
-  console.log("componentProps");
-  console.log(componentProps);
-  console.log("hiddenProps");
-  console.log(hiddenProps);
-  console.log("displayName");
-  console.log(displayName);
-  console.log("exampleProps");
-  console.log(exampleProps);
-  console.log("exampleImport");
-  console.log(exampleImport);
-  console.log("examples");
-  console.log(examples);
-  console.log("codeExample");
-  console.log(codeExample);
 
   let renderedComponent = React.createElement(component, componentProps);
 
@@ -147,8 +120,6 @@ const StoryPage = ({
         codeExample={codeExample}
         />
 
-      {/*renderedComponent*/}
-
     </div>
   );
 
@@ -214,6 +185,7 @@ StoryPage.propTypes = {
   component: PropTypes.any,
   componentProps: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   hiddenProps: PropTypes.array,
+  readOnlyProps: PropTypes.array,
   displayName: PropTypes.string,
   exampleProps: PropTypes.object,
 
@@ -231,7 +203,8 @@ StoryPage.defaultProps = {
   config: {
     importFormat: ''
   },
-  hiddenProps: []
+  hiddenProps: [],
+  readOnlyProps: []
 };
 
 export default StoryPage;

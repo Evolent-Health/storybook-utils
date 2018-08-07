@@ -32,15 +32,19 @@ export default class PropsCollapse extends React.Component {
   render() {
     return (
       <div>
-        <div onClick={this.toggleCollapse} >
-          <Header as="h2">
-            {this.props.title}
-          </Header>
+        <Grid columns='equal' onClick={this.toggleCollapse} style={{ marginBottom: "12px", borderBottom: "1px solid #22242626" }} >
+          <Grid.Column style={{ paddingBottom: "5px" }} width={6} >
+            <Header as="h2">
+              {this.props.title}
+            </Header>
+          </Grid.Column>
 
-          <div>
-            { this.state.isOpen ? 'Hide' : 'Expand' }
-          </div>
-        </div>
+          <Grid.Column style={{ paddingBottom: "5px" }} >
+            <div style={{ marginTop: "6px", color: "rgb(56, 153, 236)" }} >
+              { this.state.isOpen ? 'Hide' : 'Expand' }
+            </div>
+          </Grid.Column>
+        </Grid>
 
         <Collapse isOpened={this.state.isOpen}>
           {this.props.children}

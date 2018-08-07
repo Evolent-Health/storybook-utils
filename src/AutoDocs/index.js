@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Markdown from '../Markdown';
 import parser from './parser';
 
-import { Table } from 'semantic-ui-react';
+import {Table} from 'semantic-ui-react';
 
 const shouldHideForE2E = global.self === global.top;
 
@@ -32,8 +32,8 @@ const renderPropType = (type = {}) => {
   const typeHandlers = {
     custom: () => wrap('custom')(),
 
-    enum: value => wrap('oneOf')(value.map((v, i, allValues) =>
-      <span key={i}><code>{v.value}</code>{allValues[i + 1] && ', '}</span>)),
+    enum: value => wrap('oneOf')(Array.isArray(value) ? value.map((v, i, allValues) =>
+      <span key={i}><code>{v.value}</code>{allValues[i + 1] && ', '}</span>) : value),
 
     union: value => wrap('oneOfType')(value.map((v, i, allValues) =>
       <span key={i}>
