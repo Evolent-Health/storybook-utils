@@ -22,7 +22,7 @@
     "lint": "yoshi lint",
     "start": "yoshi start --no-test & npm run storybook",
     "release": "yoshi release",
-    "storybook": "start-storybook -p 6006"
+    "update-autodocs": "yarn add git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#master"
   },
   "dependencies": {
     "classnames": "^2.2.5",
@@ -39,6 +39,19 @@
     "react-remarkable": "^1.1.3",
     "recast": "^0.14.7",
     "semantic-ui-less": "^2.2.14",
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-config-standard-react": "^6.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-protractor": "^1.40.0",
+    "eslint-plugin-react": "^7.10.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "prettier": "^1.11.1",
     "yoshi": "^1.2.0"
   },
   "devDependencies": {
