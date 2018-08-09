@@ -22,7 +22,7 @@
     "lint": "yoshi lint",
     "start": "yoshi start --no-test & npm run storybook",
     "release": "yoshi release",
-    "update-autodocs": "yarn add git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#master"
+    "update-autodocs": "yarn add git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#readme-paths"
   },
   "dependencies": {
     "babel-eslint": "^8.2.3",
@@ -43,7 +43,7 @@
     "loader-utils": "^1.1.0",
     "prettier": "^1.11.1",
     "query-string": "^6.0.0",
-    "react-autodocs-utils": "git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#master",
+    "react-autodocs-utils": "git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#readme-paths",
     "react-collapse": "^4.0.3",
     "react-docgen": "^2.20.0",
     "react-element-to-jsx-string": "^13.2.0",

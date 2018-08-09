@@ -40,6 +40,7 @@ const StoryPage = ({
   componentProps,
   hiddenProps,
   readOnlyProps,
+  markdownOnly,
   displayName,
   exampleProps,
   exampleImport,
@@ -143,7 +144,10 @@ const StoryPage = ({
   ];
 
   return (
-    <Tab menu={{secondary: true, pointing: true}} panes={panes}/>
+    markdownOnly ?
+      <Markdown source={markdownOnly} />
+      :
+      <Tab menu={{secondary: true, pointing: true}} panes={panes}/>
   );
 };
 

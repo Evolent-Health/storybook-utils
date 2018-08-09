@@ -20,6 +20,7 @@ export default ({
   codeExample,
   hiddenProps,
   readOnlyProps,
+  markdownOnly,
   _config,
   _metadata
 }) =>
@@ -51,6 +52,7 @@ export default ({
             codeExample,
             hiddenProps,
             readOnlyProps,
+            markdownOnly,
             metadata: _metadata,
             config: _config
           }}

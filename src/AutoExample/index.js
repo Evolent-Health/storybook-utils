@@ -297,7 +297,7 @@ export default class extends Component {
     return (
       <Container fluid>
         <Grid columns="equal">
-          <Grid.Column width={6}>
+          <Grid.Column width={5}>
             {this._categorizedProps.reduce(
               (components, { title, isOpen, props }, i) => {
                 const renderablePropControllers = this.renderPropControllers({

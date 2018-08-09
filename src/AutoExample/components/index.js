@@ -58,10 +58,6 @@ Toggle.propTypes = {
 };
 
 const handleValue = value => {
-  if (Array.isArray(value)) {
-    return value.toString();
-  }
-
   let val = typeof value;
 
   switch (val) {
