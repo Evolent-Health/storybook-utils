@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Grid, Tab, Divider, Header} from 'semantic-ui-react';
+import { Grid, Tab, Divider, Header } from 'semantic-ui-react';
 import Markdown from '../Markdown';
 import AutoDocs from '../AutoDocs';
 import CodeBlock from '../CodeBlock';
@@ -30,6 +30,9 @@ const importString = ({metadata, config, exampleImport}) =>
     }
   ].find(({when}) => when()).make();
 
+/* `StoryPage` will render received props or, rather, pass
+** them to other lower level components like autoexample
+*/
 const StoryPage = ({
   metadata,
   config,

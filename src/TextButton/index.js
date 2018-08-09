@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 export default class TextButton extends Component {
-
   static propTypes = {
     onClick: PropTypes.func,
     children: PropTypes.node
@@ -24,14 +23,14 @@ export default class TextButton extends Component {
   }
 
   render() {
-    const buttonColor = this.state.isHover ? '#4EB7F5' : '#3899EC';
+    const buttonColor = this.state.isHover ? "#4EB7F5" : "#3899EC";
 
     const style = {
       color: buttonColor,
-      outline: 'none',
-      border: 'none',
-      background: 'none',
-      cursor: 'pointer'
+      outline: "none",
+      border: "none",
+      background: "none",
+      cursor: "pointer"
     };
 
     return (
@@ -40,7 +39,7 @@ export default class TextButton extends Component {
         onMouseEnter={this.toggleHover}
         onMouseLeave={this.toggleHover}
         onClick={this.props.onClick}
-        >
+      >
         {this.props.children}
       </button>
     );

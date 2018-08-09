@@ -11895,10 +11895,6 @@ wix-tpa-style-loader@~1.0.8:
     loader-utils "^1.1.0"
     postcss-extract-styles "^1.1.1"
 
-wix-ui-test-utils@^1.0.0:
-  version "1.0.103"
-  resolved "https://registry.yarnpkg.com/wix-ui-test-utils/-/wix-ui-test-utils-1.0.103.tgz#c5f0399f9989a97d95db30ed37f2b118413cf33d"
-
 wnpm-ci@~6.2.54:
   version "6.2.55"
   resolved "https://registry.yarnpkg.com/wnpm-ci/-/wnpm-ci-6.2.55.tgz#636967f5df9d87373427f79bbfff7052267c4405"
