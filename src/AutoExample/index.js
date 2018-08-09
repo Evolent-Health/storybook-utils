@@ -266,7 +266,7 @@ export default class extends Component {
     }
 
     return (
-        <Container>
+        <Container fluid>
           <Grid columns='equal'>
 
             <Grid.Column>
