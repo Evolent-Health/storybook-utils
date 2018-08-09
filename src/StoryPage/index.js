@@ -48,6 +48,8 @@ const StoryPage = ({
 }) => {
   const visibleDisplayName = displayName || metadata.displayName;
 
+  console.log(metadata.readme);
+
   const visibleMetadata = {
     ...metadata,
     hiddenProps,

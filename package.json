@@ -78,22 +78,6 @@
       "wix"
     ]
   },
-  "eslintConfig": {
-    "extends": "wix/react",
-    "env": {
-      "jest": true
-    },
-    "rules": {
-      "react/jsx-handler-names": 0,
-      "react/no-find-dom-node": 0,
-      "react/no-string-refs": 0,
-      "react/jsx-boolean-value": 2,
-      "comma-dangle": [
-        "error",
-        "never"
-      ]
-    }
-  },
   "jest": {
     "setupFiles": [
       "raf/polyfill",
