@@ -20,7 +20,7 @@ export default ({
   codeExample,
   hiddenProps,
   readOnlyProps,
-  markdownOnly,
+  componentReadme,
   _config,
   _metadata
 }) =>
@@ -52,7 +52,7 @@ export default ({
             codeExample,
             hiddenProps,
             readOnlyProps,
-            markdownOnly,
+            componentReadme,
             metadata: _metadata,
             config: _config
           }}

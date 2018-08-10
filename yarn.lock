@@ -9107,7 +9107,7 @@ rc@^1.2.7:
 
 "react-autodocs-utils@git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#readme-paths":
   version "3.0.2"
-  resolved "git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#ead29a41765f29625d25b8e89577697b7ecf09a4"
+  resolved "git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#e9717f8502c367f4e61762954d8a32cc396fe5c0"
   dependencies:
     "@babel/traverse" "^7.0.0-beta.40"
     "@babel/types" "^7.0.0-beta.40"

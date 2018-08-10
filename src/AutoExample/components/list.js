@@ -73,7 +73,7 @@ export default class List extends React.Component {
       this.state.options.find(
         option => option.id === this.state.currentValue.id
       ) || {};
-    return selectedOption.id || 0;
+    return selectedOption.id;
   };
 
   onOptionChange = ({ id }) => {
