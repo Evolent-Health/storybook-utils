@@ -9101,9 +9101,9 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-"react-autodocs-utils@git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#readme-paths":
+"react-autodocs-utils@git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#master":
   version "3.0.2"
-  resolved "git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#e9717f8502c367f4e61762954d8a32cc396fe5c0"
+  resolved "git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#c013fff758a327b1f92176d64ca58dfecbfb5a17"
   dependencies:
     "@babel/traverse" "^7.0.0-beta.40"
     "@babel/types" "^7.0.0-beta.40"
