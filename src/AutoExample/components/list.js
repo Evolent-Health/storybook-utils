@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Icon, Dropdown, Form, Radio, Button } from "semantic-ui-react";
 import NO_VALUE_TYPE from "../../AutoExample/no-value-type";
-
 // const isUndefined = a => typeof a === "undefined";
 
 export default class List extends React.Component {
