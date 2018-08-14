@@ -9,11 +9,12 @@ module.exports = {
       // and here we... hack a little to try and support more
       const parsers = [
         {
-          rule: value => value.toString() === '[object Object]',
+          rule: value => value.toString() === "[object Object]",
           parser: value => value
         },
         {
-          rule: value => typeof value === 'string' && value.match(/^function|\(\)\s?=>/),
+          rule: value =>
+            typeof value === "string" && value.match(/^function|\(\)\s?=>/),
           parser: value => eval(`(${value})`) // eslint-disable-line no-eval
         },
         {
@@ -21,31 +22,27 @@ module.exports = {
           parser: value => value
         },
         {
-          rule: value => typeof value === 'string' && !isNaN(Date.parse(value)),
+          rule: value => typeof value === "string" && !isNaN(Date.parse(value)),
           parser: value => new Date(value)
         },
         {
-          rule: value => typeof value === 'string',
+          rule: value => typeof value === "string",
           parser: value => value
         },
-        { // default
+        {
+          // default
           rule: () => true,
           parser: value => JSON.parse(value)
         }
       ];
 
-      const args = Object
-        .keys(componentProps)
-        .reduce(
-          (props, key) => {
-            const {parser} = parsers.find(({rule}) => rule(props[key]));
-            props[key] = parser(props[key]);
-            return props;
-          },
-          componentProps
-        );
+      const args = Object.keys(componentProps).reduce((props, key) => {
+        const { parser } = parsers.find(({ rule }) => rule(props[key]));
+        props[key] = parser(props[key]);
+        return props;
+      }, componentProps);
 
-      // this is possible because:
+      // This is possible because:
       // <AutoExample ref={ref => window.autoexample = ref}/>
       window.autoexample.setState({
         propsState: Object.assign({}, window.autoexample.state.propsState, args)
@@ -55,6 +52,6 @@ module.exports = {
     return browser.executeScript(script, props);
   },
   reset: () => {
-    return browser.executeScript('window.autoexample.resetState()');
+    return browser.executeScript("window.autoexample.resetState()");
   }
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Tab, Divider } from 'semantic-ui-react';
+import { Grid, Tab, Divider, Header } from 'semantic-ui-react';
 import Markdown from '../Markdown';
 import AutoDocs from '../AutoDocs';
 import CodeBlock from '../CodeBlock';
@@ -18,7 +18,7 @@ const importString = ({metadata, config, exampleImport}) =>
       when: () => config.importFormat,
       make: () =>
         config.importFormat
-          .replace(/%componentName/g, "")
+          .replace(/%componentName/g, '')
           .replace(
             new RegExp('%(' + Object.keys(config).join('|') + ')', 'g'),
             (match, configKey) => config[configKey] || ''
@@ -30,6 +30,9 @@ const importString = ({metadata, config, exampleImport}) =>
     }
   ].find(({when}) => when()).make();
 
+/* `StoryPage` will render received props or, rather, pass
+** them to other lower level components like autoexample
+*/
 const StoryPage = ({
   metadata,
   config,
@@ -37,141 +40,118 @@ const StoryPage = ({
   componentProps,
   hiddenProps,
   readOnlyProps,
+  componentReadme,
   displayName,
   exampleProps,
   exampleImport,
   examples,
   codeExample
 }) => {
-  const visibleDisplayName = displayName || metadata.displayName;
-  
-  const visibleMetadata = {
-    ...metadata,
-    hiddenProps,
-    readOnlyProps,
-    displayName: visibleDisplayName,
-    props: omit(metadata.props)(prop => hiddenProps.includes(prop))
-  };
+    const visibleDisplayName = displayName || metadata.displayName;
 
-  let renderedComponent = React.createElement(component, componentProps);
+    const visibleMetadata = {
+      ...metadata,
+      hiddenProps,
+      readOnlyProps,
+      displayName: visibleDisplayName,
+      props: omit(metadata.props)(prop => hiddenProps.includes(prop))
+    };
 
-  let componentURL;
-
-  for (let i = 0; i < config.componentPaths.length; i++) {
-    if (config.componentPaths[i][0] === visibleDisplayName) {
-      componentURL = config.componentPaths[i][1];
+    let componentURL;
+    for (let i = 0; i < config.componentPaths.length; i++) {
+      if (config.componentPaths[i][0] === visibleDisplayName) {
+        componentURL = config.componentPaths[i][1];
+      }
     }
-  }
 
-  
+    const usageTab = (
+      <div>
+        <Grid columns="equal">
+          <Grid.Column>
+            <div>
+              <Markdown
+                source={`# \`<${visibleDisplayName}/>\``}
+              />
+            </div>
+          </Grid.Column>
 
-  let usageTab = (
-    <div>
-      <Grid columns='equal'>
-        <Grid.Column>
+          <Grid.Column>
+            { (displayName || metadata.displayName) &&
+              <div style={{textAlign: 'right', marginTop: '8px'}}>
+                <a
+                  style={{fontSize: '20px', color: 'rgb(56, 153, 236)'}}
+                  href={`${config.repoBaseURL}${componentURL}`}
+                  target="_blank"
+                  >
+                  View source
+                </a>
+              </div>
+            }
+          </Grid.Column>
+        </Grid>
+
+        <Divider/>
+    
+        {/*metadata.readme &&
           <div>
             <Markdown
-              source={`# \`<${visibleDisplayName}/>\``}
+              source={metadata.readme}
             />
+            <Divider/>
           </div>
-        </Grid.Column>
-        <Grid.Column>
-          { (displayName || metadata.displayName) &&
-            <div style={{ textAlign: "right", marginTop: "8px" }}>
-              <a
-                style={{ fontSize: "20px", color: "rgb(56, 153, 236)" }}
-                href={`${config.repoBaseURL}${componentURL}`}
-                target="_blank"
-                >
-                View source
-              </a>
-            </div>
-          }
-        </Grid.Column>
-      </Grid>
-      <Divider />
+        */}
 
-      {metadata.readme ?
-        <div>
-          <Markdown
-            source={metadata.readme}
-          />
-          <Divider />
-        </div>
-        :
-        null
-      }
-
-      <CodeBlock
-        style={{ marginTop: "10px" }}
-        source={importString({
-          config,
-          metadata: visibleMetadata,
-          exampleImport
-        })}
-      />
-      <Divider />
-      
-      <AutoExample
-        component={component}
-        parsedSource={visibleMetadata}
-        componentProps={componentProps}
-        exampleProps={exampleProps}
-        codeExample={codeExample}
-        />
-
-    </div>
-  );
-
-  const panes = [
-    { menuItem: 'Usage', render: () => <Tab.Pane attached={false}>{usageTab}</Tab.Pane> },
-    { menuItem: 'API', render: () => <Tab.Pane attached={false}><AutoDocs parsedSource={visibleMetadata}/></Tab.Pane> },
-    (metadata.readmeTestkit ? { menuItem: 'Testkit', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> } : null),
-    (metadata.readmeAccessibility ? { menuItem: 'Accessibility', render: () => <Tab.Pane attached={false}>Tab 4 Content</Tab.Pane> } : null),
-  ];
-
-  return (
-      <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
-
-
-    /*
-    <TabbedView tabs={tabs(metadata)}>
-      <div className={styles.usage}>
-        
+        {componentReadme &&
+          <div>
+            <Markdown
+              source={componentReadme}
+            />
+            <Divider/>
+          </div>
+        }
 
         <CodeBlock
-          dataHook="metadata-import"
+          style={{marginTop: '10px'}}
           source={importString({
             config,
             metadata: visibleMetadata,
             exampleImport
           })}
-          />
+        />
+        
+        <Divider/>
 
-        <Section title="Playground">
-          <AutoExample
-            component={component}
-            parsedSource={visibleMetadata}
-            componentProps={componentProps}
-            exampleProps={exampleProps}
-            codeExample={codeExample}
-            />
-        </Section>
+        <AutoExample
+          component={component}
+          parsedSource={visibleMetadata}
+          componentProps={componentProps}
+          exampleProps={exampleProps}
+          codeExample={codeExample}
+        />
 
         { examples &&
-          <Section title="Examples">
+          <div>
+            <Header as="h2">Examples</Header>
+            <Divider/>
             {examples}
-          </Section>
-         }
+          </div>
+        }
       </div>
+    );
 
-      <AutoDocs parsedSource={visibleMetadata}/>
+    const panes = [
+      {
+        menuItem: 'Usage', 
+        render: () => <Tab.Pane attached={false}>{usageTab}</Tab.Pane>
+      },
+      {
+        menuItem: 'API', 
+        render: () => <Tab.Pane attached={false}><AutoDocs parsedSource={visibleMetadata}/></Tab.Pane>
+      }
+    ];
 
-      { metadata.readmeTestkit && <Markdown source={metadata.readmeTestkit}/> }
-
-      { metadata.readmeAccessibility && <Markdown source={metadata.readmeAccessibility}/> }
-    </TabbedView>
-    */
+  return (
+    <Tab menu={{secondary: true, pointing: true}} panes={panes}/>
   );
 };
 
@@ -188,14 +168,8 @@ StoryPage.propTypes = {
   readOnlyProps: PropTypes.array,
   displayName: PropTypes.string,
   exampleProps: PropTypes.object,
-
-  /** custom string to be displayed in place of import example
-   * usually something like `import Component from 'module/Component';`
-   */
   exampleImport: PropTypes.string,
   examples: PropTypes.node,
-
-  /** currently only `false` possible. later same property shall be used for configuring code example */
   codeExample: PropTypes.bool
 };
 

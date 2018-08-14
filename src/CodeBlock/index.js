@@ -1,12 +1,11 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import copy from 'copy-to-clipboard';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import copy from "copy-to-clipboard";
+import TextButton from "../TextButton";
+import Markdown from "../Markdown";
 
-import TextButton from '../TextButton';
-import Markdown from '../Markdown';
-
-const toCodeBlock = (code, type = 'js') =>
-  ['```' + type, code.trim(), '```'].join('\n');
+const toCodeBlock = (code, type = "js") =>
+  ["```" + type, code.trim(), "```"].join("\n");
 
 export default class CodeBlock extends Component {
   static propTypes = {
@@ -16,7 +15,7 @@ export default class CodeBlock extends Component {
   };
 
   static defaultProps = {
-    type: 'js'
+    type: "js"
   };
 
   state = {
@@ -25,17 +24,17 @@ export default class CodeBlock extends Component {
 
   onCopyClick = () => {
     copy(this.props.source);
-    this.setState({showNotification: true});
+    this.setState({ showNotification: true });
   };
 
   render() {
-    const {source, type, dataHook} = this.props;
+    const { source, type, dataHook } = this.props;
 
     return (
       <div data-hook={dataHook}>
         <TextButton onClick={this.onCopyClick}>Copy to clipboard</TextButton>
 
-        <Markdown source={toCodeBlock(source, type)}/>
+        <Markdown source={toCodeBlock(source, type)} />
       </div>
     );
   }

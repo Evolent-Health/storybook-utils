@@ -1,6 +1,4 @@
-import {parse} from 'react-docgen';
+import { parse } from "react-docgen";
+import ComponentResolver from "./component-resolver";
 
-import ComponentResolver from './component-resolver';
-
-export default (source = '') =>
-  parse(source, ComponentResolver);
+export default (source = "") => parse(source, ComponentResolver);
