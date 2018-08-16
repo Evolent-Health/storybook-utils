@@ -83,7 +83,7 @@ const StoryPage = ({
     }
   }
 
-  const usageTab = (
+  const codeTab = (
     <div>
       <Grid columns="equal">
         <Grid.Column>
@@ -140,8 +140,8 @@ const StoryPage = ({
 
   const panes = [
     {
-      menuItem: "Usage",
-      render: () => <Tab.Pane attached={false}>{usageTab}</Tab.Pane>
+      menuItem: "Code",
+      render: () => <Tab.Pane attached={false}>{codeTab}</Tab.Pane>
     },
     {
       menuItem: "API",
@@ -153,7 +153,7 @@ const StoryPage = ({
     },
     componentReadme
       ? {
-          menuItem: "Documentation",
+          menuItem: "Usage",
           render: () => (
             <Tab.Pane attached={false}>
               <Markdown source={componentReadme} />
