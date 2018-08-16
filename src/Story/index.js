@@ -22,6 +22,8 @@ export default ({
   readOnlyProps,
   HOCProps,
   componentReadme,
+  usageReadme,
+  styleReadme,
   _config,
   _metadata
 }) =>
@@ -55,6 +57,8 @@ export default ({
             readOnlyProps,
             HOCProps,
             componentReadme,
+            usageReadme,
+            styleReadme,
             metadata: _metadata,
             config: _config
           }}

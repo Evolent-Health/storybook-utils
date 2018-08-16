@@ -45,6 +45,8 @@ const StoryPage = ({
   readOnlyProps,
   HOCProps,
   componentReadme,
+  usageReadme,
+  styleReadme,
   displayName,
   exampleProps,
   exampleImport,
@@ -109,6 +111,13 @@ const StoryPage = ({
 
       <Divider />
 
+      {componentReadme && (
+        <div>
+          <Markdown source={componentReadme} />
+          <Divider />
+        </div>
+      )}
+
       <CodeBlock
         style={{ marginTop: "10px" }}
         source={importString({
@@ -151,12 +160,22 @@ const StoryPage = ({
         </Tab.Pane>
       )
     },
-    componentReadme
+    usageReadme
       ? {
           menuItem: "Usage",
           render: () => (
             <Tab.Pane attached={false}>
-              <Markdown source={componentReadme} />
+              <Markdown source={usageReadme} />
+            </Tab.Pane>
+          )
+        }
+      : null,
+    styleReadme
+      ? {
+          menuItem: "Style",
+          render: () => (
+            <Tab.Pane attached={false}>
+              <Markdown source={styleReadme} />
             </Tab.Pane>
           )
         }
@@ -178,6 +197,8 @@ StoryPage.propTypes = {
   hiddenProps: PropTypes.array,
   readOnlyProps: PropTypes.array,
   HOCProps: PropTypes.any,
+  usageReadme: PropTypes.any,
+  styleReadme: PropTypes.any,
   componentReadme: PropTypes.any,
   displayName: PropTypes.string,
   exampleProps: PropTypes.object,
