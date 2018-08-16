@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Grid, Tab, Divider, Header } from 'semantic-ui-react';
-import Markdown from '../Markdown';
-import AutoDocs from '../AutoDocs';
-import CodeBlock from '../CodeBlock';
-import AutoExample from '../AutoExample';
-import omit from '../AutoExample/utils/omit';
-import 'semantic-ui-less/semantic.less';
+import React from "react";
+import PropTypes from "prop-types";
+import { Grid, Tab, Divider, Header } from "semantic-ui-react";
+import Markdown from "../Markdown";
+import AutoDocs from "../AutoDocs";
+import CodeBlock from "../CodeBlock";
+import AutoExample from "../AutoExample";
+import omit from "../AutoExample/utils/omit";
+import "semantic-ui-less/semantic.less";
 
-const importString = ({metadata, config, exampleImport}) =>
+const importString = ({ metadata, config, exampleImport }) =>
   [
     {
       when: () => exampleImport,
@@ -18,17 +18,20 @@ const importString = ({metadata, config, exampleImport}) =>
       when: () => config.importFormat,
       make: () =>
         config.importFormat
-          .replace(/%componentName/g, '')
+          .replace(/%componentName/g, "")
           .replace(
-            new RegExp('%(' + Object.keys(config).join('|') + ')', 'g'),
-            (match, configKey) => config[configKey] || ''
+            new RegExp("%(" + Object.keys(config).join("|") + ")", "g"),
+            (match, configKey) => config[configKey] || ""
           )
     },
     {
       when: () => true,
-      make: () => `import { ${metadata.displayName} } from '${config.moduleName}';`
+      make: () =>
+        `import { ${metadata.displayName} } from '${config.moduleName}';`
     }
-  ].find(({when}) => when()).make();
+  ]
+    .find(({ when }) => when())
+    .make();
 
 /* `StoryPage` will render received props or, rather, pass
 ** them to other lower level components like autoexample
@@ -40,6 +43,7 @@ const StoryPage = ({
   componentProps,
   hiddenProps,
   readOnlyProps,
+  HOCProps,
   componentReadme,
   displayName,
   exampleProps,
@@ -47,112 +51,119 @@ const StoryPage = ({
   examples,
   codeExample
 }) => {
-    const visibleDisplayName = displayName || metadata.displayName;
+  const visibleDisplayName = displayName || metadata.displayName;
 
-    const visibleMetadata = {
-      ...metadata,
-      hiddenProps,
-      readOnlyProps,
-      displayName: visibleDisplayName,
-      props: omit(metadata.props)(prop => hiddenProps.includes(prop))
-    };
+  if (HOCProps) {
+    let keys = Object.keys(HOCProps);
 
-    let componentURL;
-    for (let i = 0; i < config.componentPaths.length; i++) {
-      if (config.componentPaths[i][0] === visibleDisplayName) {
-        componentURL = config.componentPaths[i][1];
+    for (let i = 0; i < keys.length; i++) {
+      if (!componentProps[keys[i]]) {
+        componentProps[keys[i]] = HOCProps[keys[i]].initialValue;
       }
+      metadata.props[keys[i]] = {
+        description: HOCProps[keys[i]].description,
+        required: HOCProps[keys[i]].required,
+        type: HOCProps[keys[i]].type
+      };
     }
+  }
 
-    const usageTab = (
-      <div>
-        <Grid columns="equal">
-          <Grid.Column>
-            <div>
-              <Markdown
-                source={`# \`<${visibleDisplayName}/>\``}
-              />
+  const visibleMetadata = {
+    ...metadata,
+    hiddenProps,
+    readOnlyProps,
+    displayName: visibleDisplayName,
+    props: omit(metadata.props)(prop => hiddenProps.includes(prop))
+  };
+
+  let componentURL;
+  for (let i = 0; i < config.componentPaths.length; i++) {
+    if (config.componentPaths[i][0] === visibleDisplayName) {
+      componentURL = config.componentPaths[i][1];
+    }
+  }
+
+  const usageTab = (
+    <div>
+      <Grid columns="equal">
+        <Grid.Column>
+          <div>
+            <Markdown source={`# \`<${visibleDisplayName}/>\``} />
+          </div>
+        </Grid.Column>
+
+        <Grid.Column>
+          {(displayName || metadata.displayName) && (
+            <div style={{ textAlign: "right", marginTop: "8px" }}>
+              <a
+                style={{ fontSize: "20px", color: "rgb(56, 153, 236)" }}
+                href={`${config.repoBaseURL}${componentURL}`}
+                target="_blank"
+              >
+                View source
+              </a>
             </div>
-          </Grid.Column>
+          )}
+        </Grid.Column>
+      </Grid>
 
-          <Grid.Column>
-            { (displayName || metadata.displayName) &&
-              <div style={{textAlign: 'right', marginTop: '8px'}}>
-                <a
-                  style={{fontSize: '20px', color: 'rgb(56, 153, 236)'}}
-                  href={`${config.repoBaseURL}${componentURL}`}
-                  target="_blank"
-                  >
-                  View source
-                </a>
-              </div>
-            }
-          </Grid.Column>
-        </Grid>
+      <Divider />
 
-        <Divider/>
-    
-        {/*metadata.readme &&
-          <div>
-            <Markdown
-              source={metadata.readme}
-            />
-            <Divider/>
-          </div>
-        */}
+      <CodeBlock
+        style={{ marginTop: "10px" }}
+        source={importString({
+          config,
+          metadata: visibleMetadata,
+          exampleImport
+        })}
+      />
 
-        {componentReadme &&
-          <div>
-            <Markdown
-              source={componentReadme}
-            />
-            <Divider/>
-          </div>
-        }
+      <Divider />
 
-        <CodeBlock
-          style={{marginTop: '10px'}}
-          source={importString({
-            config,
-            metadata: visibleMetadata,
-            exampleImport
-          })}
-        />
-        
-        <Divider/>
+      <AutoExample
+        component={component}
+        parsedSource={visibleMetadata}
+        componentProps={componentProps}
+        exampleProps={exampleProps}
+        codeExample={codeExample}
+      />
 
-        <AutoExample
-          component={component}
-          parsedSource={visibleMetadata}
-          componentProps={componentProps}
-          exampleProps={exampleProps}
-          codeExample={codeExample}
-        />
-
-        { examples &&
-          <div>
-            <Header as="h2">Examples</Header>
-            <Divider/>
-            {examples}
-          </div>
-        }
-      </div>
-    );
-
-    const panes = [
-      {
-        menuItem: 'Usage', 
-        render: () => <Tab.Pane attached={false}>{usageTab}</Tab.Pane>
-      },
-      {
-        menuItem: 'API', 
-        render: () => <Tab.Pane attached={false}><AutoDocs parsedSource={visibleMetadata}/></Tab.Pane>
-      }
-    ];
-
-  return (
-    <Tab menu={{secondary: true, pointing: true}} panes={panes}/>
+      {examples && (
+        <div>
+          <Header as="h2">Examples</Header>
+          <Divider />
+          {examples}
+        </div>
+      )}
+    </div>
   );
+
+  const panes = [
+    {
+      menuItem: "Usage",
+      render: () => <Tab.Pane attached={false}>{usageTab}</Tab.Pane>
+    },
+    {
+      menuItem: "API",
+      render: () => (
+        <Tab.Pane attached={false}>
+          <AutoDocs parsedSource={visibleMetadata} />
+        </Tab.Pane>
+      )
+    },
+    componentReadme
+      ? {
+          menuItem: "Documentation",
+          render: () => (
+            <Tab.Pane attached={false}>
+              <Markdown source={componentReadme} />
+            </Tab.Pane>
+          )
+        }
+      : null
+  ];
+
+  return <Tab menu={{ secondary: true, pointing: true }} panes={panes} />;
 };
 
 StoryPage.propTypes = {
@@ -166,6 +177,8 @@ StoryPage.propTypes = {
   componentProps: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   hiddenProps: PropTypes.array,
   readOnlyProps: PropTypes.array,
+  HOCProps: PropTypes.any,
+  componentReadme: PropTypes.any,
   displayName: PropTypes.string,
   exampleProps: PropTypes.object,
   exampleImport: PropTypes.string,
@@ -175,7 +188,7 @@ StoryPage.propTypes = {
 
 StoryPage.defaultProps = {
   config: {
-    importFormat: ''
+    importFormat: ""
   },
   hiddenProps: [],
   readOnlyProps: []

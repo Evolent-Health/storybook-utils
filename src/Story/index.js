@@ -20,6 +20,7 @@ export default ({
   codeExample,
   hiddenProps,
   readOnlyProps,
+  HOCProps,
   componentReadme,
   _config,
   _metadata
@@ -52,6 +53,7 @@ export default ({
             codeExample,
             hiddenProps,
             readOnlyProps,
+            HOCProps,
             componentReadme,
             metadata: _metadata,
             config: _config
