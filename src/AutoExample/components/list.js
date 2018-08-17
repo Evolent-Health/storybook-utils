@@ -76,6 +76,7 @@ export default class List extends React.Component {
   };
 
   onOptionChange = (e, { value }) => {
+    console.log("OptionChange");
     const currentValue =
       this.state.options.find(option => option.id === value) || {};
 
@@ -119,13 +120,11 @@ export default class List extends React.Component {
                 name="radioGroup"
                 value={id}
                 onChange={this.onOptionChange}
+                checked={this.state.currentValue.id === id}
               />
             </Form.Field>
           ))}
         </Form>
-        {!this.props.required &&
-          this.state.currentValue.value &&
-          this.clearButton}
       </div>
     );
   }
