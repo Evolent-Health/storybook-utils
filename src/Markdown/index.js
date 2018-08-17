@@ -34,7 +34,8 @@ hljs.registerLanguage("bash", require("highlight.js/lib/languages/bash.js"));
 
 export default class Markdown extends Component {
   static propTypes = {
-    source: PropTypes.string
+    source: PropTypes.string,
+    type: PropTypes.string
   };
 
   render() {
@@ -49,7 +50,10 @@ export default class Markdown extends Component {
     };
 
     return !shouldHideForE2E ? (
-      <div className="markdown-body">
+      <div
+        className="markdown-body"
+        style={{ margin: this.props.type ? "-27px 0px -25px" : "" }}
+      >
         <Remarkable source={this.props.source} options={options} />
       </div>
     ) : null;

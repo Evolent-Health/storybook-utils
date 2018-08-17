@@ -90,7 +90,7 @@ const StoryPage = ({
       <Grid columns="equal">
         <Grid.Column>
           <div>
-            <Markdown source={`# \`<${visibleDisplayName}/>\``} />
+            <Markdown source={`# \`<${visibleDisplayName}/>\``} type="header" />
           </div>
         </Grid.Column>
 
@@ -111,13 +111,6 @@ const StoryPage = ({
 
       <Divider />
 
-      {componentReadme && (
-        <div>
-          <Markdown source={componentReadme} />
-          <Divider />
-        </div>
-      )}
-
       <CodeBlock
         style={{ marginTop: "10px" }}
         source={importString({
@@ -127,7 +120,14 @@ const StoryPage = ({
         })}
       />
 
-      <Divider />
+      {componentReadme && (
+        <div>
+          <Divider />
+          <Markdown source={componentReadme} />
+        </div>
+      )}
+
+      <Divider style={{ marginBottom: "24px" }} />
 
       <AutoExample
         component={component}
@@ -139,8 +139,10 @@ const StoryPage = ({
 
       {examples && (
         <div>
-          <Header as="h2">Examples</Header>
           <Divider />
+          <Header as="h2" style={{ margin: "-6px 0px 6px" }}>
+            Examples
+          </Header>
           {examples}
         </div>
       )}
