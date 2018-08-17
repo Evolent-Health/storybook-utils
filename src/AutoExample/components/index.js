@@ -18,9 +18,9 @@ let styles = {};
 
 const Preview = ({ children }) => (
   <div>
-    <div>
-      <Header as="h2">Preview</Header>
-    </div>
+    <Header as="h2" style={{ margin: "4px 0px 10px 0px" }}>
+      Preview
+    </Header>
 
     <div
       style={{
@@ -101,7 +101,7 @@ CustomInput.propTypes = {
 const Code = ({ component }) => (
   <Grid.Column width={16}>
     <div className={styles.title}>
-      <Markdown source={`## ${"Code"}`} />
+      <Markdown source={`## ${"Code"}`} type="header" />
     </div>
 
     <ComponentSource component={component} />
