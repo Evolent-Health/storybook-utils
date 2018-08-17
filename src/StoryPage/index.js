@@ -196,6 +196,7 @@ StoryPage.propTypes = {
   }),
   component: PropTypes.any,
   componentProps: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  componentPath: PropTypes.any,
   hiddenProps: PropTypes.array,
   readOnlyProps: PropTypes.array,
   HOCProps: PropTypes.any,
