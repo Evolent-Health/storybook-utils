@@ -41,6 +41,7 @@ const StoryPage = ({
   config,
   component,
   componentProps,
+  componentPath,
   hiddenProps,
   readOnlyProps,
   HOCProps,
@@ -62,11 +63,14 @@ const StoryPage = ({
       if (!componentProps[keys[i]]) {
         componentProps[keys[i]] = HOCProps[keys[i]].initialValue;
       }
-      metadata.props[keys[i]] = {
-        description: HOCProps[keys[i]].description,
-        required: HOCProps[keys[i]].required,
-        type: HOCProps[keys[i]].type
-      };
+
+      if (!metadata.props[keys[i]]) {
+        metadata.props[keys[i]] = {
+          description: HOCProps[keys[i]].description,
+          required: HOCProps[keys[i]].required,
+          type: HOCProps[keys[i]].type
+        };
+      }
     }
   }
 
@@ -78,12 +82,8 @@ const StoryPage = ({
     props: omit(metadata.props)(prop => hiddenProps.includes(prop))
   };
 
-  let componentURL;
-  for (let i = 0; i < config.componentPaths.length; i++) {
-    if (config.componentPaths[i][0] === visibleDisplayName) {
-      componentURL = config.componentPaths[i][1];
-    }
-  }
+  let componentURL = componentPath.split("./");
+  componentURL = componentURL[componentURL.length - 1];
 
   const codeTab = (
     <div>
