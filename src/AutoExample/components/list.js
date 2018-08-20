@@ -30,10 +30,11 @@ export default class List extends React.Component {
       option = option || {};
       return {
         id: option.id || id,
-        // value: option.label || (option.type && option.type.name) || "" + option,
-        value: option.value,
-        // realValue: isUndefined(option.value) ? option : option.value
-        realValue: option.computed
+        value:
+          option.label ||
+          (option.type && option.type.name) ||
+          option.value.replace(/"/g, ""),
+        realValue: option.value.replace(/"/g, "")
       };
     });
 
@@ -67,7 +68,6 @@ export default class List extends React.Component {
       </Button>
     </div>
   );
-
   getSelectedId = () => {
     const selectedOption =
       this.state.options.find(
@@ -76,9 +76,9 @@ export default class List extends React.Component {
     return selectedOption.id;
   };
 
-  onOptionChange = ({ id }) => {
+  onOptionChange = (e, { value }) => {
     const currentValue =
-      this.state.options.find(option => option.id === id) || {};
+      this.state.options.find(option => option.id === value) || {};
 
     this.setState(
       {
@@ -113,20 +113,18 @@ export default class List extends React.Component {
     return (
       <div>
         <Form>
-          {this.state.options.map(({ id, value, realValue }) => (
+          {this.state.options.map(({ id, value }) => (
             <Form.Field key={id}>
               <Radio
                 label={value}
                 name="radioGroup"
                 value={id}
-                defaultChecked={realValue}
+                onChange={this.onOptionChange}
+                checked={this.state.currentValue.id === id}
               />
             </Form.Field>
           ))}
         </Form>
-        {!this.props.required &&
-          this.state.currentValue.value &&
-          this.clearButton}
       </div>
     );
   }

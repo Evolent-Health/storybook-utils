@@ -12,10 +12,10 @@ const Option = ({
   onChange,
   defaultValue,
   required,
-  dataHook
+  datahook
 }) =>
   children ? (
-    <Grid columns="equal" dataHook={dataHook} className={styles.option}>
+    <Grid columns="equal" datahook={datahook} className={styles.option}>
       <Grid.Column width={6}>
         <Markdown source={`\`${label}${required ? "*" : ""}\``} />
       </Grid.Column>
@@ -40,7 +40,7 @@ Option.propTypes = {
   children: PropTypes.node,
   onChange: PropTypes.func,
   required: PropTypes.bool,
-  dataHook: PropTypes.string
+  datahook: PropTypes.string
 };
 
 export default Option;

@@ -14,6 +14,7 @@ export default ({
   storyName,
   displayName,
   componentProps,
+  componentPath,
   examples,
   exampleProps,
   exampleImport,
@@ -48,6 +49,7 @@ export default ({
           {...{
             component,
             componentProps,
+            componentPath,
             exampleProps,
             exampleImport,
             displayName,

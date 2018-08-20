@@ -11,7 +11,7 @@ export default class CodeBlock extends Component {
   static propTypes = {
     source: PropTypes.string,
     type: PropTypes.string,
-    dataHook: PropTypes.string
+    datahook: PropTypes.string
   };
 
   static defaultProps = {
@@ -28,10 +28,10 @@ export default class CodeBlock extends Component {
   };
 
   render() {
-    const { source, type, dataHook } = this.props;
+    const { source, type, datahook } = this.props;
 
     return (
-      <div data-hook={dataHook}>
+      <div data-hook={datahook}>
         <TextButton onClick={this.onCopyClick}>Copy to clipboard</TextButton>
 
         <Markdown source={toCodeBlock(source, type)} />
