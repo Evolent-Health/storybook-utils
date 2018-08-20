@@ -30,10 +30,11 @@ export default class List extends React.Component {
       option = option || {};
       return {
         id: option.id || id,
-        // value: option.label || (option.type && option.type.name) || "" + option,
-        value: option.value.slice(1, -1),
-        // realValue: isUndefined(option.value) ? option : option.value
-        realValue: option.value.slice(1, -1)
+        value:
+          option.label ||
+          (option.type && option.type.name) ||
+          option.value.replace(/"/g, ""),
+        realValue: option.value.replace(/"/g, "")
       };
     });
 
@@ -76,7 +77,6 @@ export default class List extends React.Component {
   };
 
   onOptionChange = (e, { value }) => {
-    console.log("OptionChange");
     const currentValue =
       this.state.options.find(option => option.id === value) || {};
 
