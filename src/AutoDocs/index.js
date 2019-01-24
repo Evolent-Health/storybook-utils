@@ -7,13 +7,20 @@ import { Table } from "semantic-ui-react";
 const shouldHideForE2E = global.self === global.top;
 
 const prepareParsedProps = props => {
+  console.log("props", props);
   const asList = Object.keys(props).map(key => ({
     ...props[key],
     name: key
   }));
 
+  console.log("aslist", asList);
+
   const required = asList.filter(prop => prop.required);
+
+  console.log("required", required);
   const notRequired = asList.filter(prop => !prop.required);
+
+  console.log("notRequired", notRequired);
 
   // required props go first
   return required.concat(notRequired);

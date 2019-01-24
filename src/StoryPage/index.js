@@ -6,6 +6,8 @@ import AutoDocs from "../AutoDocs";
 import CodeBlock from "../CodeBlock";
 import AutoExample from "../AutoExample";
 import omit from "../AutoExample/utils/omit";
+// import Frame from "./Frame";
+import Frame from "react-frame-component";
 import "semantic-ui-less/semantic.less";
 
 const importString = ({ metadata, config, exampleImport }) =>
@@ -56,6 +58,8 @@ const StoryPage = ({
 }) => {
   const visibleDisplayName = displayName || metadata.displayName;
 
+  console.log("METADATA", metadata);
+
   if (HOCProps) {
     let keys = Object.keys(HOCProps);
 
@@ -81,6 +85,8 @@ const StoryPage = ({
     displayName: visibleDisplayName,
     props: omit(metadata.props)(prop => hiddenProps.includes(prop))
   };
+
+  console.log("visibleMetadata", visibleMetadata);
 
   let componentURL = componentPath.split("./");
   componentURL = componentURL[componentURL.length - 1];
@@ -129,13 +135,15 @@ const StoryPage = ({
 
       <Divider style={{ marginBottom: "24px" }} />
 
-      <AutoExample
-        component={component}
-        parsedSource={visibleMetadata}
-        componentProps={componentProps}
-        exampleProps={exampleProps}
-        codeExample={codeExample}
-      />
+      <Frame>
+        <AutoExample
+          component={component}
+          parsedSource={visibleMetadata}
+          componentProps={componentProps}
+          exampleProps={exampleProps}
+          codeExample={codeExample}
+        />
+      </Frame>
 
       {examples && (
         <div>

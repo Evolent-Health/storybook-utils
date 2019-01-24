@@ -110,7 +110,6 @@ export default class extends Component {
 
   setProp = (key, value) => {
     if (value === NO_VALUE_TYPE) {
-      // eslint-disable-next-line no-unused-vars
       const { [key]: deletedKey, ...propsState } = this.state.propsState;
       this.setState({ propsState });
     } else {
@@ -302,7 +301,7 @@ export default class extends Component {
               (components, { title, isOpen, props }, i) => {
                 const renderablePropControllers = this.renderPropControllers({
                   props,
-                  allProps: componentProps // TODO: ideally this should not be here
+                  allProps: componentProps
                 }).filter(({ props: { children } }) => children);
 
                 return renderablePropControllers.length
