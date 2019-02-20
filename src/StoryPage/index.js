@@ -82,8 +82,12 @@ const StoryPage = ({
     props: omit(metadata.props)(prop => hiddenProps.includes(prop))
   };
 
-  let componentURL = componentPath.split("./");
+  let componentURL = componentPath.split("lib/");
   componentURL = componentURL[componentURL.length - 1];
+
+  console.log("componentPath", componentPath);
+  console.log("componentURL", componentURL);
+  console.log("config.repoBaseURL", config.repoBaseURL);
 
   const codeTab = (
     <div>
