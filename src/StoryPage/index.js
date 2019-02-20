@@ -85,10 +85,6 @@ const StoryPage = ({
   let componentURL = componentPath.split("lib/");
   componentURL = componentURL[componentURL.length - 1];
 
-  console.log("componentPath", componentPath);
-  console.log("componentURL", componentURL);
-  console.log("config.repoBaseURL", config.repoBaseURL);
-
   const codeTab = (
     <div>
       <Grid columns="equal">
