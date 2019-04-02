@@ -28,7 +28,9 @@ const formatJSX = component => {
   for (let i = 1; i < arr.length; i++) {
       if (arr[i].includes("WEBPACK")) {
           arr[i] = "{ (function) }";
-      }
+      } else {	
+        arr[i] = "{" + arr[i] + "}";	
+    }
   }
 
   return arr.join("");
