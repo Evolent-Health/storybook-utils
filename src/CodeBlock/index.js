@@ -4,8 +4,8 @@ import copy from "copy-to-clipboard";
 import TextButton from "../TextButton";
 import Markdown from "../Markdown";
 
-const toCodeBlock = (code, type = "js") =>
-  ["```" + type, code.trim(), "```"].join("\n");
+const toCodeBlock = (code, type = 'js') =>
+  ['```' + type, code.trim(), '```'].join('\n');
 
 export default class CodeBlock extends Component {
   static propTypes = {
