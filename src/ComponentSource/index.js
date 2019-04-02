@@ -5,6 +5,11 @@ import CodeBlock from "../CodeBlock";
 import removeHOC from "./remove-hoc";
 import functionToString from "./function-to-string";
 
+import prettyFormat from "pretty-format";
+import renderer from 'react-test-renderer';
+const { ReactTestComponent } = prettyFormat.plugins;
+
+/*
 const componentToJSX = component =>
   reactElementToJSXString(component, {
     displayName: element =>
@@ -14,6 +19,12 @@ const componentToJSX = component =>
     showDefaultProps: false,
     showFunctions: false,
     functionValue: functionToString
+  });
+*/
+
+const componentToJSX = component => prettyFormat(renderer.create(component), {
+    plugins: [ReactTestComponent],
+    printFunctionName: true,
   });
 
 // Given react component, render a source example
