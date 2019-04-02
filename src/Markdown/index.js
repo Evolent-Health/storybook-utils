@@ -4,33 +4,21 @@ import Remarkable from "react-remarkable";
 import hljs from "highlight.js/lib/highlight.js";
 import "./style.scss";
 
-hljs.registerLanguage(
-  "javascript",
-  require("highlight.js/lib/languages/javascript.js")
-);
+hljs.registerLanguage('javascript', require('highlight.js/lib/languages/javascript.js'));
 
-hljs.registerLanguage(
-  "typescript",
-  require("highlight.js/lib/languages/typescript.js")
-);
+hljs.registerLanguage('typescript', require('highlight.js/lib/languages/typescript.js'));
 
-hljs.registerLanguage(
-  "markdown",
-  require("highlight.js/lib/languages/markdown.js")
-);
+hljs.registerLanguage('css', require('highlight.js/lib/languages/css.js'));
 
-hljs.registerLanguage(
-  "django",
-  require("highlight.js/lib/languages/django.js")
-);
+hljs.registerLanguage('scss', require('highlight.js/lib/languages/scss.js'));
 
-hljs.registerLanguage("css", require("highlight.js/lib/languages/css.js"));
+hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml.js'));
 
-hljs.registerLanguage("scss", require("highlight.js/lib/languages/scss.js"));
+hljs.registerLanguage('bash', require('highlight.js/lib/languages/bash.js'));
 
-hljs.registerLanguage("xml", require("highlight.js/lib/languages/xml.js"));
+hljs.registerLanguage('markdown', require('highlight.js/lib/languages/markdown.js'));
 
-hljs.registerLanguage("bash", require("highlight.js/lib/languages/bash.js"));
+hljs.registerLanguage('django', require('highlight.js/lib/languages/django.js'));
 
 export default class Markdown extends Component {
   static propTypes = {
@@ -39,23 +27,20 @@ export default class Markdown extends Component {
   };
 
   render() {
-    const shouldHideForE2E = global.self === global.top;
+    if (global.self === global.top) {
+      return null;
+    }
 
     const options = {
       html: true,
-      linkTarget: "_parent",
-      highlight(code, lang) {
-        return hljs.highlight(lang, code).value;
-      }
+      linkTarget: '_parent',
+      highlight: (code, lang) => hljs.highlight(lang, code).value,
     };
 
-    return !shouldHideForE2E ? (
-      <div
-        className="markdown-body"
-        style={{ margin: this.props.type ? "-27px 0px -25px" : "" }}
-      >
-        <Remarkable source={this.props.source} options={options} />
+    return (
+      <div className={className || 'markdown-body'}>
+        <Remarkable source={this.props.source.trim()} options={options} />
       </div>
-    ) : null;
+    );
   }
 }
