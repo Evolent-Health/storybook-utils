@@ -32,7 +32,7 @@
     "node-sass": "^4.11.0",
     "react-autodocs-utils": "git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#master",
     "react-collapse": "^4.0.3",
-    "react-docgen": "^4.1.0",
+    "react-docgen": "^2.20.0",
     "react-element-to-jsx-string": "^14.0.2",
     "react-motion": "^0.5.2",
     "react-remarkable": "^1.1.3",
