@@ -9,7 +9,6 @@ import prettyFormat from "pretty-format";
 import renderer from 'react-test-renderer';
 const { ReactTestComponent } = prettyFormat.plugins;
 
-/*
 const componentToJSX = component =>
   reactElementToJSXString(component, {
     displayName: element =>
@@ -20,16 +19,24 @@ const componentToJSX = component =>
     showFunctions: false,
     functionValue: functionToString
   });
-*/
 
-const componentToJSX = component => prettyFormat(renderer.create(component), {
-    plugins: [ReactTestComponent],
-    printFunctionName: true,
-  });
+const formatJSX = component => {
+  const jsx = componentToJSX(component);
+
+  let arr = jsx.split(/[{}]+/);
+
+  for (let i = 1; i < arr.length; i++) {
+      if (arr[i].includes("WEBPACK")) {
+          arr[i] = "{ (function) }";
+      }
+  }
+
+  return arr.join("");
+}
 
 // Given react component, render a source example
 const ComponentSource = ({ component }) => (
-  <CodeBlock source={componentToJSX(component)} />
+  <CodeBlock source={formatJSX(component)} />
 );
 
 ComponentSource.propTypes = {
