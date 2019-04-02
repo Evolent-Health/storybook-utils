@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "copy-to-clipboard": "^3.0.8",
-    "github-markdown-css": "^2.9.0",
+    "github-markdown-css": "^3.0.1",
     "highlight.js": "^9.15.6",
     "loader-utils": "^1.2.3",
     "node-sass": "^4.11.0",
