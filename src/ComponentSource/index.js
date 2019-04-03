@@ -21,16 +21,18 @@ const formatJSX = component => {
 
   let arr = jsx.split("IMPORTED_MODULE");
 
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i].includes("WEBPACK") && !arr[i].includes("{")) {
-      arr[i] = "";
-    } else if (arr[i].lastIndexOf("{") > arr[i].lastIndexOf("}")) {
-      arr[i] = arr[i].substring(0, arr[i].lastIndexOf("{") + 1) + " (rendered jsx) ";
-    } else {
-      arr[i] = arr[i].substring(arr[i].indexOf("}") , arr[i].length);
+  if (arr.length > 1) {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].includes("WEBPACK") && !arr[i].includes("{")) {
+        arr[i] = "";
+      } else if (arr[i].lastIndexOf("{") > arr[i].lastIndexOf("}")) {
+        arr[i] = arr[i].substring(0, arr[i].lastIndexOf("{") + 1) + " (rendered jsx) ";
+      } else {
+        arr[i] = arr[i].substring(arr[i].indexOf("}") , arr[i].length);
+      }
     }
   }
-
+  
   return arr.join("");
 }
 

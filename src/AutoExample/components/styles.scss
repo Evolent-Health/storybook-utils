@@ -12,12 +12,6 @@
   &:nth-child(2n + 1) {
     background-color: #f6f8fa;
   }
-
-  :global {
-    .markdown-body p {
-      margin: 0;
-    }
-  }
 }
 
 .title {
