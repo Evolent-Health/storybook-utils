@@ -6,27 +6,24 @@ import js from 'highlight.js/lib/languages/javascript';
 
 Lowlight.registerLanguage('js', js);
 
-const CodeBlock = React.createClass({
-    displayName: 'CodeBlock',
-    propTypes: {
+export default class CodeBlock extends React.Component {
+    static propTypes = {
         literal: PropTypes.string,
         language: PropTypes.string,
         inline: PropTypes.bool
-    },
+    };
 
     shouldComponentUpdate(nextProps, nextState) {
         return shallowCompare(this, nextProps, nextState);
-    },
-
-    render: function() {
+    }
+  
+    render() {
         return (
             <Lowlight
-                language={this.props.language || 'js'}
-                value={this.props.literal}
-                inline={this.props.inline}
-            />
+                    language={this.props.language || 'js'}
+                    value={this.props.literal}
+                    inline={this.props.inline}
+                />
         );
     }
-});
-
-export default CodeBlock;
+  }
