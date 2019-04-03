@@ -19,20 +19,17 @@ const componentToJSX = component =>
 const formatJSX = component => {
   const jsx = componentToJSX(component);
 
-  let arr = jsx.split(/[{}]+/);
+  let arr = jsx.split("IMPORTED_MODULE");
 
-  let prearr = arr.slice(0);
-  console.log(prearr);
-
-  for (let i = 1; i < arr.length; i++) {
-      if (arr[i].includes("WEBPACK")) {
-          arr[i] = "{ (function) }";
-      } else {
-        arr[i] = "{" + arr[i] + "}";
-      }
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].includes("WEBPACK") && !arr[i].includes("{")) {
+      arr[i] = "";
+    } else if (arr[i].lastIndexOf("{") > arr[i].lastIndexOf("}")) {
+      arr[i] = arr[i].substring(0, arr[i].lastIndexOf("{") + 1) + " (rendered jsx) ";
+    } else {
+      arr[i] = arr[i].substring(arr[i].indexOf("}") , arr[i].length);
+    }
   }
-
-  console.log(arr);
 
   return arr.join("");
 }
