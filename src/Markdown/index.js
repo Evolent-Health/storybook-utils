@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
-const ReactMarkdown = require('react-markdown')
+import ReactMarkdown from 'react-markdown';
+import codeRenderer from './code-renderer';
 
  export default class Markdown extends Component {
   static propTypes = {
@@ -12,9 +12,13 @@ const ReactMarkdown = require('react-markdown')
    render() {
     return (
       <ReactMarkdown
-      source={this.props.source.trim()}
-      escapeHtml={false}
-    />
+          source={this.props.source.trim()}
+          escapeHtml
+          renderers={{
+              CodeBlock: codeRenderer,
+              Code: codeRenderer
+          }}
+      />
     );
   }
 }
