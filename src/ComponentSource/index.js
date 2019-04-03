@@ -21,7 +21,7 @@ const formatJSX = component => {
 
   let arr = jsx.split(/[{}]+/);
 
-  prearr = arr.slice(0);
+  let prearr = arr.slice(0);
   console.log(prearr);
 
   for (let i = 1; i < arr.length; i++) {
