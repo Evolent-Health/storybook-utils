@@ -16,9 +16,25 @@ const componentToJSX = component =>
     functionValue: functionToString
   });
 
+const formatJSX = component => {
+  const jsx = componentToJSX(component);
+
+  let arr = jsx.split(/[{}]+/);
+
+  for (let i = 1; i < arr.length; i++) {
+      if (arr[i].includes("WEBPACK")) {
+          arr[i] = "{ (function) }";
+      } else {
+        arr[i] = "{" + arr[i] + "}";
+      }
+  }
+
+  return arr.join("");
+}
+
 // Given react component, render a source example
 const ComponentSource = ({ component }) => (
-  <CodeBlock source={componentToJSX(component)} />
+  <CodeBlock source={formatJSX(component)} />
 );
 
 ComponentSource.propTypes = {

@@ -1,5 +1,27 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+
+const ReactMarkdown = require('react-markdown')
+
+ export default class Markdown extends Component {
+  static propTypes = {
+    source: PropTypes.string,
+    type: PropTypes.string
+  };
+
+   render() {
+    return (
+      <ReactMarkdown
+      source={this.props.source.trim()}
+      escapeHtml={false}
+    />
+    );
+  }
+}
+
+/*
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Remarkable from "react-remarkable";
 import hljs from "highlight.js/lib/highlight.js";
 import "./style.scss";
@@ -59,3 +81,4 @@ export default class Markdown extends Component {
     ) : null;
   }
 }
+*/
