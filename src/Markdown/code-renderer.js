@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import Lowlight from 'react-lowlight';
 import shallowCompare from 'react-addons-shallow-compare';
 import js from 'highlight.js/lib/languages/javascript';
@@ -8,9 +9,9 @@ Lowlight.registerLanguage('js', js);
 const CodeBlock = React.createClass({
     displayName: 'CodeBlock',
     propTypes: {
-        literal: React.PropTypes.string,
-        language: React.PropTypes.string,
-        inline: React.PropTypes.bool
+        literal: PropTypes.string,
+        language: PropTypes.string,
+        inline: PropTypes.bool
     },
 
     shouldComponentUpdate(nextProps, nextState) {
