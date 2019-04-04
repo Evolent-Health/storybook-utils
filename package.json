@@ -28,6 +28,7 @@
     "copy-to-clipboard": "^3.0.8",
     "highlight.js": "^9.12.0",
     "loader-utils": "^1.1.0",
+    "node-sass": "^4.11.0",
     "react-addons-shallow-compare": "^15.6.2",
     "react-autodocs-utils": "git+ssh://git@github.com:Evolent-Health/react-autodocs-utils.git#master",
     "react-collapse": "^4.0.3",
@@ -37,7 +38,7 @@
     "react-markdown": "^4.0.6",
     "react-motion": "^0.5.2",
     "recast": "^0.14.7",
-    "yoshi": "^1.2.0"
+    "yoshi": "^4.2.1"
   },
   "devDependencies": {
     "@evolent/soil": "^2.1.3",
