@@ -16,9 +16,29 @@ const componentToJSX = component =>
     functionValue: functionToString
   });
 
+const formatJSX = component => {
+  const jsx = componentToJSX(component);
+
+  let arr = jsx.split("IMPORTED_MODULE");
+
+  if (arr.length > 1) {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].includes("WEBPACK") && !arr[i].includes("{")) {
+        arr[i] = "";
+      } else if (arr[i].lastIndexOf("{") > arr[i].lastIndexOf("}")) {
+        arr[i] = arr[i].substring(0, arr[i].lastIndexOf("{") + 1) + " (rendered jsx) ";
+      } else {
+        arr[i] = arr[i].substring(arr[i].indexOf("}") , arr[i].length);
+      }
+    }
+  }
+  
+  return arr.join("");
+}
+
 // Given react component, render a source example
 const ComponentSource = ({ component }) => (
-  <CodeBlock source={componentToJSX(component)} />
+  <CodeBlock source={formatJSX(component)} />
 );
 
 ComponentSource.propTypes = {
